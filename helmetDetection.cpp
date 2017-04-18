@@ -2,7 +2,8 @@
 
 
 bool helmetDetection(Mat helmetArea)
-{
+{  
+	
 	Mat gray;
 	cvtColor(helmetArea, gray, CV_RGB2GRAY);
 	string cascadeName = "cascade.xml";
