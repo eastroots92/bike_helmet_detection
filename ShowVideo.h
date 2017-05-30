@@ -6,4 +6,4 @@
 using namespace std;
 using namespace cv;
 
-void showVideo(String name, Mat matSrc);
+void showVideo(string name, Mat matSrc);

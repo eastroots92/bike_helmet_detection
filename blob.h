@@ -1,5 +1,10 @@
 #pragma once
 
+
+/*
+  출처 : git.hub
+  일부 함수 수정 후 커스텀 하여 사용
+*/
 #include <opencv2\opencv.hpp>
 
 #define HORIZONTAL	0
@@ -61,10 +66,14 @@ private:
 
 	// 가로-세로비가 비교값 보다 작은 레이블 제거
 public:
-	void	BlobWidthHeightSmallRatioConstraint(float fRatio);
+	void	BlobWidthHeightSmallRatioConstraint(float fRatio ,int option);
 private:
-	int	_BlobWidthHeightSmallRatioConstraint(float fRatio, int nRecNumber, CvRect* rect, int* label);
+	int	_BlobWidthHeightSmallRatioConstraint(float fRatio, int nRecNumber, CvRect* rect, int* label, int option);
 
+public:
+	void	BlobBigSizeConstraint(int nWidth, int nHeight);
+private:
+	int	_BlobBigSizeConstraint(int nWidth, int nHeight, int nRecNumber, CvRect* rect, int* label);
 
 	// 중심점이 이미지의 모서리에 존재하는 레이블 제거
 public:

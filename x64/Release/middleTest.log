@@ -1,0 +1,11 @@
+﻿  motorcycle.cpp
+C:\Users\user\Downloads\opencv\build\include\opencv2/core/mat.hpp(1965): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+C:\Users\user\Downloads\opencv\build\include\opencv2/core/persistence.hpp : warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+C:\Users\user\Downloads\opencv\build\include\opencv2/core/utility.hpp : warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+C:\Users\user\Downloads\opencv\build\include\opencv2/core/utility.hpp : warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  코드를 생성하고 있습니다.
+c:\users\user\documents\카카오톡 받은 파일\middletest2 (1)\helmetdetection.cpp(171): warning C4715: 'Helmet::isHelmetDetect': 모든 제어 경로에서 값을 반환하지는 않습니다.
+  All 345 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  코드를 생성했습니다.
+  middleTest.vcxproj -> C:\Users\user\Documents\카카오톡 받은 파일\middleTest2 (1)\x64\Release\middleTest.exe
+  middleTest.vcxproj -> C:\Users\user\Documents\카카오톡 받은 파일\middleTest2 (1)\x64\Release\middleTest.pdb (Full PDB)

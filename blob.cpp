@@ -355,6 +355,60 @@ int CBlobLabeling::__NRFIndNeighbor(unsigned char *DataBuf, int nWidth, int nHei
 	return 0;
 }
 
+/// @brief 지정한 nWidth와 nHeight보다 큰 Blob을 모두 제거
+/// @param[in] nWidth   가로 크기 Threshold
+/// @param[in] nHeight  세로 크기 Threshold
+void CBlobLabeling::BlobBigSizeConstraint(int nWidth, int nHeight)
+{
+	m_nBlobs = _BlobBigSizeConstraint(nWidth, nHeight, m_nBlobs, m_recBlobs, m_intBlobs);
+}
+
+/// @brief 지정한 nWidth와 nHeight보다 큰 Blob을 모두 제거하는 실제 함수
+/// @param[in] nWidth       가로 크기 Threshold
+/// @param[in] nHeight      세로 크기 Threshold
+/// @param[in] nRecNumber   Blob 개수
+/// @param[in] rect         Blob 영역 정보
+/// @param[in] blobs        Blob Index 정보
+/// @return 정리된 Blob 개수
+int CBlobLabeling::_BlobBigSizeConstraint(int nWidth, int nHeight, int nRecNumber, CvRect* rect, int* label)
+{
+	if (nRecNumber == 0)	return 0;
+
+	int nX;
+	int ntempRec = 0;
+
+	CvRect* temp = new CvRect[nRecNumber];
+	int* labeled = new int[nRecNumber];
+
+	for (nX = 0; nX < nRecNumber; nX++)
+	{
+		temp[nX] = rect[nX];
+		labeled[nX] = label[nX];
+	}
+
+	for (nX = 0; nX < nRecNumber; nX++)
+	{
+		if ((rect[nX].width < nWidth) && (rect[nX].height < nHeight))
+		{
+			temp[ntempRec] = rect[nX];
+			labeled[ntempRec] = label[nX];
+
+			ntempRec++;
+		}
+	}
+
+	for (nX = 0; nX < ntempRec; nX++)
+	{
+		rect[nX] = temp[nX];
+		label[nX] = labeled[nX];
+	}
+
+	delete temp;
+	delete labeled;
+
+	return ntempRec;
+}
+
 /// @brief Blob 영역 중 지정된 Label을 가진 영역의 크기(픽셀 수)를 구하는 함수
 /// @param[in] DataBuf   Labeling에 사용할 이미지 데이터 버퍼
 /// @param[in] StartX   탐색 시작지점 X좌표
@@ -381,9 +435,9 @@ int CBlobLabeling::__Area(unsigned char *DataBuf, int StartX, int StartY, int En
 /// @remarks Width/Hight 가 fRatio보다 작을 경우, 그것들을 버리고, 결과를 rect로 변경\n
 /// Input으로 들어온 rect와 그것의 개수 nRecNumber는 수행후, 변경된 값 들어감
 /// @param[in] fRatio 가로/세로 비율
-void CBlobLabeling::BlobWidthHeightSmallRatioConstraint(float fRatio)
+void CBlobLabeling::BlobWidthHeightSmallRatioConstraint(float fRatio, int option)
 {
-	m_nBlobs = _BlobWidthHeightSmallRatioConstraint(fRatio, m_nBlobs, m_recBlobs, m_intBlobs);
+	m_nBlobs = _BlobWidthHeightSmallRatioConstraint(fRatio, m_nBlobs, m_recBlobs, m_intBlobs, option);
 }
 
 /// @brief 가로/세로 비율이 지정한 비율보다 작은 Blob 제거하는 실제 함수
@@ -392,7 +446,7 @@ void CBlobLabeling::BlobWidthHeightSmallRatioConstraint(float fRatio)
 /// @param[in] blobs    Blob Index 정보
 /// @param[in] nRecNumber Blob 개수
 /// @return 정리된 Blob 개수
-int CBlobLabeling::_BlobWidthHeightSmallRatioConstraint(float fRatio, int nRecNumber, CvRect* rect, int* blobs)
+int CBlobLabeling::_BlobWidthHeightSmallRatioConstraint(float fRatio, int nRecNumber, CvRect* rect, int* blobs, int option)
 {
 	if (nRecNumber == 0)	return 0;
 
@@ -410,12 +464,25 @@ int CBlobLabeling::_BlobWidthHeightSmallRatioConstraint(float fRatio, int nRecNu
 
 	for (nX = 0; nX < nRecNumber; nX++)
 	{
-		if ((float)rect[nX].height / rect[nX].width > fRatio)
+		if (option & VERTICAL)
 		{
-			rect[ntempRec] = temp[nX];
-			blobs[ntempRec] = labeled[nX];
+			if ((float)rect[nX].height / rect[nX].width > fRatio)
+			{
+				rect[ntempRec] = temp[nX];
+				blobs[ntempRec] = labeled[nX];
 
-			ntempRec++;
+				ntempRec++;
+			}
+		}
+		else if (option == HORIZONTAL)
+		{
+			if ((float)rect[nX].width / rect[nX].height > fRatio)
+			{
+				rect[ntempRec] = temp[nX];
+				blobs[ntempRec] = labeled[nX];
+
+				ntempRec++;
+			}
 		}
 	}
 
