@@ -5,6 +5,7 @@
   입력 file명에 path, 확장자 제거 후 name 저장
   file의 실제 파일명 부분 앞의 bkg_를 붙인 bkg_name.jpg 배경이미지의 이름을 
   bkg_name에 저장
+  ji
 */
 Motorcycle ::Motorcycle(string file)
 {
